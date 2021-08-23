@@ -50,7 +50,7 @@ class MainViewController: UIViewController, UITextFieldDelegate, UIPickerViewDel
         frame.size.width = 10000;
         self.mainTextField.frame = frame;
         
-        mainTextField.attributedPlaceholder = NSAttributedString(string: "Write the infinitive here!", attributes: [NSForegroundColorAttributeName:UIColor.white])
+        mainTextField.attributedPlaceholder = NSAttributedString(string: "Write the infinitive here!", attributes: [NSAttributedStringKey.foregroundColor:UIColor.white])
         
         picker.delegate = self
         picker.dataSource = self
@@ -155,9 +155,13 @@ class MainViewController: UIViewController, UITextFieldDelegate, UIPickerViewDel
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedCell = autoCompleteTableView.cellForRow(at: indexPath) as! CustomCell
-        mainTextField.text = selectedCell.autoCompleteVerbLabel2.text
-        textFieldShouldReturn(mainTextField)
+        if tableView == autoCompleteTableView {
+            let selectedCell = autoCompleteTableView.cellForRow(at: indexPath) as! CustomCell
+            mainTextField.text = selectedCell.autoCompleteVerbLabel2.text
+            textFieldShouldReturn(mainTextField)
+        } else {
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {

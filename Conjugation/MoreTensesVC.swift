@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import GoogleMobileAds
+import MessageUI
 
-class MoreTensesVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
+class MoreTensesVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, MFMailComposeViewControllerDelegate {
 
     var moreViewController: MoreTensesVC?
     let more = ConjugateMore()
@@ -26,11 +26,10 @@ class MoreTensesVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, 
     
     var cell: CustomCell!
     
-    let forms = ["Translation", "Past Participle", "Gerund"]
+    let forms = ["Translation", "Past Participle", "Gerund", "Contact the developer"]
     
     var autoCompleteVerbs = [String]()
     @IBOutlet weak var autoCompleteTableView: UITableView!
-    @IBOutlet weak var adBannerView: GADBannerView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,21 +40,12 @@ class MoreTensesVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, 
         frame.size.width = 10000;
         self.otherTextField.frame = frame;
         
-        otherTextField.attributedPlaceholder = NSAttributedString(string: "Write the infinitive here!", attributes: [NSForegroundColorAttributeName:UIColor.white])
+        otherTextField.attributedPlaceholder = NSAttributedString(string: "Write the infinitive here!", attributes: [NSAttributedStringKey.foregroundColor:UIColor.white])
         
         self.otherTable.backgroundColor = UIColor.groupTableViewBackground
         
         autoCompleteTableView.isScrollEnabled = true
         autoCompleteTableView.isHidden = true
-        
-        // ADMOB
-        adBannerView.adUnitID = "ca-app-pub-8279701606777726/6275340694"
-        adBannerView.rootViewController = self
-        
-        let request = GADRequest()
-        request.testDevices = ["d1f6c75a4f170a83619a4e0c133f905c"]
-        
-        adBannerView.load(request)
     }
     
     /* TABLE VIEW SETUP */
@@ -63,7 +53,7 @@ class MoreTensesVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, 
         var count: Int?
         
         if tableView == self.otherTable {
-            count = 3
+            count = 4
         } else if tableView == self.autoCompleteTableView {
             count = autoCompleteVerbs.count
         }
@@ -87,9 +77,16 @@ class MoreTensesVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, 
                     cell!.otherVerb.text = more.pastParticiple
                 } else if ((indexPath as NSIndexPath).row == 2) {
                     cell!.otherVerb.text = more.gerund
+                } else if ((indexPath as NSIndexPath).row == 3) {
+                    cell!.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
                 }
             } else {
-                cell!.otherVerb.text = " "
+                if ((indexPath as NSIndexPath).row == 3) {
+                    cell!.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+                    cell!.otherVerb.text = " "
+                } else {
+                    cell!.otherVerb.text = " "
+                }
             }
             
         } else if tableView == self.autoCompleteTableView {
@@ -116,9 +113,23 @@ class MoreTensesVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedCell = autoCompleteTableView.cellForRow(at: indexPath) as! CustomCell
-        otherTextField.text = selectedCell.autoCompleteVerbLabel.text
-        textFieldShouldReturn(otherTextField)
+        if tableView == self.autoCompleteTableView {
+            let selectedCell = autoCompleteTableView.cellForRow(at: indexPath) as! CustomCell
+            otherTextField.text = selectedCell.autoCompleteVerbLabel.text
+            textFieldShouldReturn(otherTextField)
+        } else if tableView == self.otherTable {
+            if indexPath.row == 3 {
+                let mailComposerVC = MFMailComposeViewController()
+                mailComposerVC.mailComposeDelegate = self
+                mailComposerVC.setToRecipients(["wasim@wasimsandhu.com"])
+                mailComposerVC.setSubject("App Feedback: Conjugation")
+                mailComposerVC.setMessageBody("", isHTML: false)
+                presentMailComposeViewController(mailComposeViewController: mailComposerVC)
+                tableView.deselectRow(at: indexPath, animated: true)
+            } else {
+                tableView.deselectRow(at: indexPath, animated: true)
+            }
+        }
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -181,6 +192,30 @@ class MoreTensesVC: UIViewController, UITextFieldDelegate, UITableViewDelegate, 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func presentMailComposeViewController(mailComposeViewController: MFMailComposeViewController) {
+        if MFMailComposeViewController.canSendMail() {
+            self.present(mailComposeViewController, animated: true, completion: nil)
+        } else {
+            let sendMailErrorAlert = UIAlertController.init(title: "Error", message: "Unable to send email. Please check your email settings and try again.", preferredStyle: .alert)
+            self.present(sendMailErrorAlert, animated: true, completion: nil)
+        }
+    }
+    
+    public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) { switch (result) {
+    case .cancelled:
+        self.dismiss(animated: true, completion: nil)
+    case .sent:
+        self.dismiss(animated: true, completion: nil)
+    case .failed:
+        self.dismiss(animated: true, completion: {
+            let sendMailErrorAlert = UIAlertController.init(title: "Failed", message: "Unable to send email. Please check your email settings and try again.", preferredStyle: .alert)
+            sendMailErrorAlert.addAction(UIAlertAction.init(title: "OK", style: .default, handler: nil))
+            self.present(sendMailErrorAlert, animated: true, completion: nil)
+        })
+    default: break;
+        }
     }
     
 }

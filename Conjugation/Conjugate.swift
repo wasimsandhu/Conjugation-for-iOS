@@ -43,41 +43,25 @@ class Conjugate {
     var nextIndexIE = false
     var nextIndexI = false
     
-    let irregularVerbs = ["ir", "ser", "estar", "dar", "saber", "conocer", "hacer", "traer", "poner",
-    "ver", "salir", "conducir", "haber", "poder", "querer", "venir", "decir", "tener", "oír", "freír",
-    "reír", "caer", "sonreír", "servir" ]
+    let irregularVerbs = ["ir", "ser", "estar", "dar", "saber", "conocer", "hacer", "traer", "poner", "ver", "salir", "conducir", "haber", "poder", "querer", "venir", "decir", "tener", "oír", "freír", "reír", "caer", "sonreír", "servir" ]
     
-    let irregularYoVerbs = ["tener", "venir", "salir", "poner", "caer", "traer", "oír", "hacer", "decir",
-    "conducir", "conocer"]
+    let irregularYoVerbs = ["tener", "venir", "salir", "poner", "caer", "traer", "oír", "hacer", "decir", "conducir", "conocer"]
     
-    let stemChangingVerbsIE = ["cerrar", "comenzar", "despertar", "divertir", "empezar", "empecar",
-    "encender", "entender", "sentir", "mentir", "negar", "nevar", "pensar", "preferir",
-    "recomendar", "sentar", "querer", "helar", "confesar", "calentar", "encerrar", "fregar", "defender",
-    "sugerir", "gobernar", "encerrar", "tropezar"]
+    let stemChangingVerbsIE = ["cerrar", "comenzar", "despertar", "divertir", "empezar", "empecar", "encender", "entender", "sentir", "mentir", "negar", "nevar", "pensar", "preferir", "recomendar", "sentar", "querer", "helar", "confesar", "calentar", "encerrar", "fregar", "defender", "sugerir", "gobernar", "encerrar", "tropezar"]
     
     let otherStemChangingVerbsIE = ["despertar", "empezar", "empecar", "encender", "entender", "preferir"]
     
-    let stemChangingVerbsUE = ["acostar", "acordar", "almorzar", "aprobar", "contar", "costar", "doler", "dormir", "encontrar",
-    "llover", "morir", "poder", "probar", "recordar", "soñar", "volar", "promover", "mostrar", "disolver", "devolver", "demostrar",
-    "colgar", "cocer", "absolver", "remover", "revolver", "rogar", "soler", "sonar" ,"torcer", "tronar", "demoler", "morder",
-    "envolver", "volver", "poblar"]
+    let stemChangingVerbsUE = ["acostar", "acordar", "almorzar", "aprobar", "contar", "costar", "doler", "dormir", "encontrar", "llover", "morir", "poder", "probar", "recordar", "soñar", "volar", "promover", "mostrar", "disolver", "devolver", "demostrar", "colgar", "cocer", "absolver", "remover", "revolver", "rogar", "soler", "sonar" ,"torcer", "tronar", "demoler", "morder", "envolver", "volver", "poblar"]
     
-    let stemChangingVerbsI = ["conseguir", "corregir", "seguir", "vestir", "pedir",
-    "perseguir", "persegir", "elejir", "elegir", "repetir", "impedir", "medir"]
+    let stemChangingVerbsI = ["conseguir", "corregir", "seguir", "vestir", "pedir", "perseguir", "persegir", "elejir", "elegir", "repetir", "impedir", "medir"]
     
     let otherStemChangingVerbsI = ["perseguir", "persegir", "elejir", "elegir", "repetir" ]
     
     let verbsIrregularInPreterite = ["leer", "construir", "creer"]
     
-    let verbsIrregularInPreteriteWithStem = ["competir", "repetir", "divertir", "sentir",
-    "mentir", "vestir", "preferir", "sugerir"]
+    let verbsIrregularInPreteriteWithStem = ["competir", "repetir", "divertir", "sentir", "mentir", "vestir", "preferir", "sugerir"]
     
-    let verbsVoidToAlgorithms = ["acarrear", "arreglar", "aclarar", "ejercer", "merecer", "perder", "permanecer", "pertenecer",
-    "agarrar", "aguardar", "alarmar", "apartar", "argumentar", "armar", "arrancar", "arreglar", "arrestar",
-    "caracterizar", "cargar", "cariar", "caricƒiar", "clarificar", "comparar", "contrariar", "charlar",
-    "declarar", "descarriar", "disparar", "embarazar", "encarcelar", "encargar", "garantizar", "martillar",
-    "paralizar", "parar", "participar", "preparar", "reparar", "variar", "dirigir", "circunvenir", "adquirir", "marcar",
-    "articular", "arriar", "arrojar", "arrastrar"]
+    let verbsVoidToAlgorithms = ["acarrear", "arreglar", "aclarar", "ejercer", "merecer", "perder", "permanecer", "pertenecer", "agarrar", "aguardar", "alarmar", "apartar", "argumentar", "armar", "arrancar", "arreglar", "arrestar", "caracterizar", "cargar", "cariar", "caricƒiar", "clarificar", "comparar", "contrariar", "charlar", "declarar", "descarriar", "disparar", "embarazar", "encarcelar", "encargar", "garantizar", "martillar", "paralizar", "parar", "participar", "preparar", "reparar", "variar", "dirigir", "circunvenir", "adquirir", "marcar", "articular", "arriar", "arrojar", "arrastrar"]
     
     func conjugate() {
         
@@ -97,13 +81,6 @@ class Conjugate {
             isEndingIr = true
             isEndingEr = false
             isEndingAr = false
-        } else {
-            conjugationYo = "💗"
-            conjugationTu = "😘"
-            conjugationEl = "😍"
-            conjugationNos = "❤️"
-            conjugationVos = "💏"
-            conjugationEllos = "💝"
         }
         
         // booleans to handle irregular verbs
@@ -2525,24 +2502,24 @@ class Conjugate {
             var stemChangedVerb1  = infinitive
             var stemChangedVerb2 = infinitive
             
-            // first conjugates to preterite tense of ellos/ellas/ustedes form
+            /* TODO: first conjugates to preterite tense of ellos/ellas/ustedes form
             if (hasStemChange) {
                 if (E2I) {
                     if (nextIndexI) {
                         if (infinitive == "perseguir") {
-                            if let index = stemChangedVerb1?.characters.index(of: "e") {
+                            if let index = stemChangedVerb1?.index(of: "e") {
                                 stemChangedVerb1.replaceSubrange(stemChangedVerb1.index(index, offsetBy: 2)..<stemChangedVerb1.index(index, offsetBy: 3), with: "i")
                             }
                             infinitive = stemChangedVerb1?.replacingOccurrences(of: "ir", with: "ieron")
                         } else {
-                            if let index = stemChangedVerb1?.characters.index(of: "e") {
+                            if let index = stemChangedVerb1?.index(of: "e") {
                                 stemChangedVerb1.replaceSubrange(stemChangedVerb1.index(index, offsetBy: 2)..<stemChangedVerb1.index(index, offsetBy: 3), with: "i")
                             }
                             infinitive = stemChangedVerb1?.replacingOccurrences(of: "ir", with: "ieron")
                         }
                     } else {
                         // finds "e" and changes to stem "i"
-                        if let index = stemChangedVerb1?.characters.index(of: "e") {
+                        if let index = stemChangedVerb1?.index(of: "e") {
                             stemChangedVerb1.replaceSubrange(stemChangedVerb1.index(index, offsetBy: 2)..<stemChangedVerb1.index(index, offsetBy: 3), with: "ie")
                         }
                         infinitive = stemChangedVerb1?.replacingOccurrences(of: "ir", with: "ieron")
@@ -2558,7 +2535,7 @@ class Conjugate {
                 infinitive = infinitive.replacingOccurrences(of: "ir", with: "yeron")
             } else {
                 infinitive = infinitive.replacingOccurrences(of: "ir", with: "ieron")
-            }
+            } */
             
             // then change to imperfect subjunctive endings
             conjugationYo = infinitive.replacingOccurrences(of: "ron", with: "ra")
@@ -2633,11 +2610,11 @@ class Conjugate {
         if (E2IE) {
             if (nextIndexIE) {
                 if (infinitive != "preferir") {
-                    if let index = stemChangedVerb.characters.index(of: "e") {
+                    if let index = stemChangedVerb.index(of: "e") {
                         stemChangedVerb.replaceSubrange(stemChangedVerb.index(index, offsetBy: 3)..<stemChangedVerb.index(index, offsetBy: 4), with: "ie")
                     }
                 } else {
-                    if let index = stemChangedVerb.characters.index(of: "e") {
+                    if let index = stemChangedVerb.index(of: "e") {
                         stemChangedVerb.replaceSubrange(stemChangedVerb.index(index, offsetBy: 2)..<stemChangedVerb.index(index, offsetBy: 3), with: "ie")
                     }
                 }
@@ -2655,12 +2632,12 @@ class Conjugate {
         } else if (E2I) {
             if (nextIndexI) {
                 if (infinitive != "perseguir") {
-                    if let index = stemChangedVerb.characters.index(of: "e") {
+                    if let index = stemChangedVerb.index(of: "e") {
                         stemChangedVerb.replaceSubrange(stemChangedVerb.index(index, offsetBy: 2)..<stemChangedVerb.index(index, offsetBy: 3), with: "i")
                     }
                 } else {
                     // TODO: WHY ISN'T THIS WORKING IN THE SUBJUNCTIVE FORM
-                    if let index = stemChangedVerb.characters.index(of: "e") {
+                    if let index = stemChangedVerb.index(of: "e") {
                         stemChangedVerb.replaceSubrange(stemChangedVerb.index(index, offsetBy: 3)..<stemChangedVerb.index(index, offsetBy: 4), with: "i")
                     }
                 }

@@ -1065,7 +1065,7 @@ class ConjugateMore {
 
     func replaceWithMoreThanOneEnding1() {
 
-        var infinitive1 = infinitive
+        /* var infinitive1 = infinitive
 
         if isEndingAr {
 
@@ -1092,12 +1092,12 @@ class ConjugateMore {
 
         } else {
             pastParticiple = " "
-        }
+        } */
     }
 
     func replaceWithMoreThanOneEnding2() {
 
-        var infinitive2 = infinitive
+        /* var infinitive2 = infinitive
 
         if isEndingAr {
 
@@ -1124,6 +1124,6 @@ class ConjugateMore {
 
         } else {
             gerund = " "
-        }
+        } */
     }
 }

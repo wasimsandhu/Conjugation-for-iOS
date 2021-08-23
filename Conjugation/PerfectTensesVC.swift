@@ -44,7 +44,7 @@ class PerfectTensesVC: UIViewController, UITextFieldDelegate, UIPickerViewDelega
         frame.size.width = 10000;
         self.perfectTextField.frame = frame;
         
-        perfectTextField.attributedPlaceholder = NSAttributedString(string: "Write the infinitive here!", attributes: [NSForegroundColorAttributeName:UIColor.white])
+        perfectTextField.attributedPlaceholder = NSAttributedString(string: "Write the infinitive here!", attributes: [NSAttributedStringKey.foregroundColor:UIColor.white])
         
         perfectPicker.delegate = self
         perfectPicker.dataSource = self
@@ -68,9 +68,7 @@ class PerfectTensesVC: UIViewController, UITextFieldDelegate, UIPickerViewDelega
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         perfectTenseSelection.setTitle(perfectTenses[row], for: UIControlState())
-        
         currentPerfectTense = perfectTenses[row]
-        
         readyToConjugate()
     }
     
@@ -149,9 +147,13 @@ class PerfectTensesVC: UIViewController, UITextFieldDelegate, UIPickerViewDelega
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedCell = autoCompleteTableView.cellForRow(at: indexPath) as! CustomCell
-        perfectTextField.text = selectedCell.autoCompleteVerbLabel3.text
-        textFieldShouldReturn(perfectTextField)
+        if tableView == autoCompleteTableView {
+            let selectedCell = autoCompleteTableView.cellForRow(at: indexPath) as! CustomCell
+            perfectTextField.text = selectedCell.autoCompleteVerbLabel3.text
+            textFieldShouldReturn(perfectTextField)
+        } else {
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {

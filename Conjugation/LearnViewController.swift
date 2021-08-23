@@ -7,16 +7,13 @@
 //
 
 import UIKit
-import GoogleMobileAds
 
 class LearnViewController: UIViewController, UITextViewDelegate {
     
     var moreViewController: MoreTensesVC?
-    
     var tense: String?
-    @IBOutlet weak var text: UITextView!
     
-    @IBOutlet weak var adBannerView: GADBannerView!
+    @IBOutlet weak var text: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,15 +22,6 @@ class LearnViewController: UIViewController, UITextViewDelegate {
         
         text.delegate = self
         changeText(text)
-        
-        // ADMOB
-        adBannerView.adUnitID = "ca-app-pub-8279701606777726/7752073899"
-        adBannerView.rootViewController = self
-        
-        let request = GADRequest()
-        request.testDevices = ["d1f6c75a4f170a83619a4e0c133f905c"]
-        
-        adBannerView.load(request)
     }
     
     override func didReceiveMemoryWarning() {
